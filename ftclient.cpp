@@ -80,11 +80,20 @@ int main(int argc, char **argv)
       return 1;
   }
 
-  //Send arg, fileName, and port num to server
+  std::string sndMsg = "";
 
-  write(client, arg.c_str(), strlen(arg.c_str()));
+  //Format message with space at the end so server can split msg easily
+  sndMsg = arg + " ";
+
+  write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
+
   if(bIsGet)
-    write(client, fileName.c_str(), strlen(fileName.c_str()));
+  {
+	sndMsg = fileName + " ";
+    write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
+  }
+
+  //Don't need to format last part of message
   write(client, dataPort.c_str(), strlen(dataPort.c_str()));
 
   int msgLen = 0;
