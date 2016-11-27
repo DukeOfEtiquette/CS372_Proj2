@@ -56,6 +56,7 @@ try:
         if msg[0] == '-l':
             files = glob.glob("*.txt")
             for f in files:
+                sndMsg = f + " "
                 conn.send(f)
 
         conn.close()
