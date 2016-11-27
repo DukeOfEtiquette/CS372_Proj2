@@ -3,6 +3,7 @@
 import sys
 import socket
 import signal
+import glob
 
 #make sure usage is correct
 if len(sys.argv) != 2:
@@ -51,6 +52,11 @@ try:
         msg = conn.recv(512).split(" ")
 
         print msg
+
+        if msg[0] == '-l':
+            files = glob.glob("*.txt")
+            for f in files:
+                conn.send(f)
 
         conn.close()
     
