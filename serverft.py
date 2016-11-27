@@ -45,9 +45,12 @@ try:
 
         #Accept a connect and store sock and addr
         (conn, addr) = sock.accept()
-        name = conn.recv(500)
 
         print 'Connection made with client, waiting for message...'
+
+        msg = conn.recv(512)
+
+        print msg
 
         conn.close()
     
