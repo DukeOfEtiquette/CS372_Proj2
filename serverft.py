@@ -57,6 +57,7 @@ try:
             files = glob.glob("*.txt")
             for f in files:
                 sndMsg = f + " "
+                print "sending {0}".format(sndMsg)
                 conn.send(f)
 
         conn.close()
