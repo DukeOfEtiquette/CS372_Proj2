@@ -9,10 +9,8 @@ if len(sys.argv) != 2:
     print "usage: ./code.py port"
     sys.exit(1)
 
-#
-"""
-Register signal and define signal function
-"""
+
+#Register signal and define signal function
 def signal_handler(signal, frame):
 
     #CLOSE IT
@@ -25,7 +23,7 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 #User localhost and port# passed at cmd line
-host = '127.0.0.1'
+host = 'flip2'
 port = sys.argv[1]
 
 print host
@@ -34,7 +32,7 @@ print port
 try:
     #Open socket and bind to desired host and port
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind((host, int(port)))
+    sock.bind((socket.gethostbyname(host), int(port)))
 
     print 'Socket created.' 
 
@@ -49,7 +47,7 @@ try:
         (conn, addr) = sock.accept()
         name = conn.recv(500)
 
-        print 'Connection made with {0}, waiting for message...'.format(name)
+        print 'Connection made with client, waiting for message...'
 
         conn.close()
     
