@@ -1,4 +1,7 @@
 #include <iostream>
+#include <iterator>
+#include <algorithm>
+#include <vector>
 #include <stdio.h>
 #include <string.h>
 #include <arpa/inet.h>
@@ -8,8 +11,11 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <netdb.h>
+#include <sstream>
 
 #define MSG_LEN 512
+
+void printFileList(std::string);
 
 int main(int argc, char **argv)
 {
@@ -105,7 +111,8 @@ int main(int argc, char **argv)
     files += rcvMsg;
   } 
 
-  std::cout << files << std::endl;
+  printFileList(files);
+  //std::cout << files << std::endl;
 
   //Wait for information to come back and display as we go..
 
@@ -113,4 +120,15 @@ int main(int argc, char **argv)
   close(client);
 
 	return 0;
+}
+
+void printFileList(std::string files)
+{
+  std::istringstream iss(files);
+
+  do{
+    std::string file;
+    iss >> file;
+    std::cout << file << std::endl;
+  }while(iss);
 }
