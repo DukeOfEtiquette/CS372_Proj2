@@ -56,6 +56,7 @@ try:
         if msg[0] == '-l':
             files = glob.glob("*.txt")
             conn.send(" ".join(files))
+            conn.send(" #$%")
             '''for f in files:
                 sndMsg = f + " "
                 print "sending {0}".format(sndMsg)
