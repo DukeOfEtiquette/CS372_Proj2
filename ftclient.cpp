@@ -98,12 +98,14 @@ int main(int argc, char **argv)
 
   int msgLen = 0;
   char rcvMsg[MSG_LEN];
+  std::string files = "";
 
   while( (msgLen = recv(client, rcvMsg, MSG_LEN, 0)) > 0 )
   {
-    std::cout << rcvMsg << std::endl;
+    files += rcvMsg;
   } 
 
+  std::cout << files << std::endl;
 
   //Wait for information to come back and display as we go..
 
