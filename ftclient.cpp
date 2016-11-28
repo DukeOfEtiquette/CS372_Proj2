@@ -165,7 +165,6 @@ int main(int argc, char **argv)
   {
 
   }else if(!bIsGet){
-
     ReceiveListRequest(dataSock);
 
   }
@@ -195,10 +194,14 @@ void ReceiveListRequest(int dataSock)
   char rcvMsg[MSG_LEN];
   std::string files = "";
 
-  while( (msgLen = read(dataSock, rcvMsg, MSG_LEN)) > 0 )
+  do
   {
+	std::cout << "About to recv msg\n";
+
+	msgLen = read(dataSock, rcvMsg, MSG_LEN);
+
     files += rcvMsg;
-  } 
+  } while(msgLen > 0);
 
   printFileList(files);
 
