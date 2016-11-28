@@ -65,6 +65,7 @@ try:
             # Connect to data socket on client
             dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             dataSock.connect((addr[0], int(float(msg[1]))))
+            print "Data socket connected"
 
             # Search directly for all txt files
             files = glob.glob("*.txt")
@@ -72,6 +73,7 @@ try:
             dataSock.send(" ".join(files))
             # Send a random, (likely) unique string to signal end of packet
             dataSock.send(" #$%")
+            print "Finished sending message"
             dataSock.close()
 
         # Close the connection
