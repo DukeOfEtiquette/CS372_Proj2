@@ -52,6 +52,8 @@ int main(int argc, char **argv)
 
     std::cout << "usage: Invalid argument used. Use '-l' to get a directory listing\n";
     std::cout << "or us '-g' followed by a file name to transfer a copy of that file locally.\n";
+
+    return 1;
   }
 
   struct sockaddr_in servAddr;
