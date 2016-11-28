@@ -225,6 +225,11 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
 
   std::cout << "ABOUT TO RECV " << fileName << std::endl;
 
+  if(fileExist(fileName.c_str()))
+    std::cout << "I SEE IT\n";
+  else
+    std::cout << "WHAT FILE?!!!\n";
+
   while( (msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg))) > 0)
   {
 
@@ -232,7 +237,7 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
 
 }
 
-bool is_file_exist(const char *fileName)
+bool fileExist(const char *fileName)
 {
     std::ifstream infile(fileName);
     return infile.good();
