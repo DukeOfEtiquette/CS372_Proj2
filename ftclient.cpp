@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <errno.h>
 #include <iterator>
 #include <algorithm>
@@ -18,7 +19,7 @@
 
 void printFileList(std::string);
 void ReceiveListRequest(int);
-void ReceiveFileRequest(int);
+void ReceiveFileRequest(int, std::string);
 bool fileExist(const char *);
 
 int main(int argc, char **argv)
