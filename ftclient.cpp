@@ -237,6 +237,8 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
 
   }
 
+  std::cout << "msgLen: " << msgLen << std::endl;
+
 }
 
 bool fileExist(const char *fileName)
