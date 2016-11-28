@@ -221,7 +221,9 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
   int msgLen = 0;
   char rcvMsg[MSG_LEN];
 
-  std::cout << "ABOUT TO RECV " << fileName[fileName.length() - 5] << std::endl;
+  fileName.insert(fileName.length() - 5, "0");
+
+  std::cout << "ABOUT TO RECV " << fileName << std::endl;
 
   if(fileExist(fileName.c_str()))
     std::cout << "I SEE IT\n";
