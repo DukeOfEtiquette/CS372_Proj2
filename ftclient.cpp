@@ -19,7 +19,7 @@
 void printFileList(std::string);
 void ReceiveListRequest(int);
 void ReceiveFileRequest(int);
-bool fileExist(const char *)
+bool fileExist(const char *);
 
 int main(int argc, char **argv)
 {
