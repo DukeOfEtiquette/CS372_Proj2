@@ -165,6 +165,7 @@ int main(int argc, char **argv)
 
   if(bIsGet)
   {
+    ReceiveFileRequest(newDataSock);
 
   }else if(!bIsGet){
     ReceiveListRequest(newDataSock);
@@ -212,5 +213,19 @@ void ReceiveListRequest(int dataSock)
 
   //Print the directory list
   printFileList(files);
+
+}
+
+void ReceiveFileRequest(int dataSock)
+{
+  int msgLen = 0;
+  char rcvMsg[MSG_LEN];
+
+  bzero(rcvMsg, MSG_LEN);
+
+  while( (msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg))) > 0)
+  {
+
+  }
 
 }
