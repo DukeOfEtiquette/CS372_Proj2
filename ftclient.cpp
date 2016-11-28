@@ -115,7 +115,7 @@ int main(int argc, char **argv)
   res = bind(dataSock, (struct sockaddr*) &cliAddr, sizeof(cliAddr));
 
   //Make sure it connected, otherwise exit
-  if(res < 0)
+  if(res == 0)
       std::cout << "Connection established on port number: " << dataPort << std::endl;
   else{
       std::cout << "ERROR: Connection could not be established on port number: " << dataPort << std::endl;
