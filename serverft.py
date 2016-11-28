@@ -37,33 +37,42 @@ try:
 
     print 'Socket created.' 
 
-    #Listen with a backlog of 5
+    # Listen with a backlog of 5
     sock.listen(1)
 
     while True:
 
         print "Waiting for incoming connection..."
 
-        #Accept a connect and store sock and addr
+        # Accept a connect and store sock and addr
         (conn, addr) = sock.accept()
 
         print 'Connection made with client, waiting for message...'
 
+        # Receive the message and split on spaces to create a list
         msg = conn.recv(512).split(" ")
 
+        # REMOVE THIS BEFORE SUBMITTING
         print msg
 
+        # If this is a listing request...
         if msg[0] == '-l':
-            files = glob.glob("*.txt")
-            conn.send(" ".join(files))
-            conn.send(" #$%")
-            '''for f in files:
-                sndMsg = f + " "
-                print "sending {0}".format(sndMsg)
-                conn.send(f)'''
 
+            # Connect to data socket on client
+            dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            dataSock.connect((sock.getpeername(), msg[1]))
+
+            # Search directly for all txt files
+            files = glob.glob("*.txt")
+            # Send all messages as a single string with space delim
+            dataSock.send(" ".join(files))
+            # Send a random, (likely) unique string to signal end of packet
+            dataSock.send(" #$%")
+            dataSock.close()
+
+        # Close the connection
         conn.close()
-    
+
 except Exception as err:
     print err
 

@@ -16,6 +16,7 @@
 #define MSG_LEN 512
 
 void printFileList(std::string);
+void ReceiveListRequest(int);
 
 int main(int argc, char **argv)
 {
@@ -52,6 +53,7 @@ int main(int argc, char **argv)
   }
 
   struct sockaddr_in servAddr;
+  struct sockaddr_in cliAddr;
   struct hostent *server;
   
   //Create the client socket
@@ -86,38 +88,92 @@ int main(int argc, char **argv)
       return 1;
   }
 
+  //Begin setting up data socket to receive request on
+  //I established the port before sending the message so that
+  //once the message is fully sent I can immediately start listening on
+  //the data port to make sure the server doesn't somehow make a 
+  //request before data socket is waiting
+  int dataSock = socket(AF_INET, SOCK_STREAM, 0);
+
+  //Verify socket was created, print message to std with result
+  if(dataSock < 0)
+  {
+      std::cout << "ERROR: Unable to create data socket.\n";
+      return 1;
+  }else
+  {
+      std::cout << "Data socket created successfully.\n";
+  }
+
+  //Define data socket info that we are listening on
+  cliAddr.sin_family = AF_INET;
+
+  // automatically be filled with current host's IP address
+  cliAddr.sin_addr.s_addr = INADDR_ANY; 
+  cliAddr.sin_port = htons(atoi(dataPort.c_str()));
+
+  res = bind(dataSock, (struct sockaddr*) &cliAddr, sizeof(cliAddr));
+
+  //Make sure it connected, otherwise exit
+  if(res < 0)
+      std::cout << "Connection established on port number: " << dataPort << std::endl;
+  else{
+      std::cout << "ERROR: Connection could not be established on port number: " << dataPort << std::endl;
+      close(dataSock);
+      return 1;
+  }
+
+  //Begin process of sending request message to server
   std::string sndMsg = "";
 
   //Format message with space at the end so server can split msg easily
   sndMsg = arg + " ";
 
+  //Send argument
   write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
 
+  //If this is a get request, send file name
   if(bIsGet)
   {
-	sndMsg = fileName + " ";
+	  sndMsg = fileName + " ";
     write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
   }
 
-  //Don't need to format last part of message
+  //Don't need to format last part of message, which is the data port number
   write(client, dataPort.c_str(), strlen(dataPort.c_str()));
 
-  int msgLen = 0;
-  char rcvMsg[MSG_LEN];
-  std::string files = "";
+  //Wait for a connection onto the data socket now that message has been sent
+  listen(dataSock, 1);
 
-  while( (msgLen = recv(client, rcvMsg, MSG_LEN, 0)) > 0 )
+  struct sockaddr_in cli_addr;
+  socklen_t cliLen = sizeof(cli_addr);
+
+  //Accept the connection and record requesters info
+  int newDataSock = accept(dataSock, (struct sockaddr*) &cli_addr, &cliLen);
+
+  if(newDataSock < 0)
   {
-    files += rcvMsg;
-  } 
+    std::cout << "Error on accepting data connection request.\n";
+    close(newDataSock);
+    return 1;
+  }
+  else{
+    std::cout << "Data connection established with server.\n";
+  }
 
-  printFileList(files);
-  //std::cout << files << std::endl;
+  if(bIsGet)
+  {
 
-  //Wait for information to come back and display as we go..
+  }else if(!bIsGet){
 
-  //Close the client port
+    ReceiveListRequest(dataSock);
+
+  }
+
+  //Close all sockets
   close(client);
+  close(dataSock);
+  close(newDataSock);
 
 	return 0;
 }
@@ -131,4 +187,19 @@ void printFileList(std::string files)
     iss >> file;
     std::cout << file << std::endl;
   }while(iss);
+}
+
+void ReceiveListRequest(int dataSock)
+{
+  int msgLen = 0;
+  char rcvMsg[MSG_LEN];
+  std::string files = "";
+
+  while( (msgLen = read(dataSock, rcvMsg, MSG_LEN)) > 0 )
+  {
+    files += rcvMsg;
+  } 
+
+  printFileList(files);
+
 }
