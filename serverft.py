@@ -60,6 +60,7 @@ try:
 
             # Connect to data socket on client
             dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            print sock.getpeername()
             dataSock.connect((sock.getpeername(), msg[1]))
 
             # Search directly for all txt files
