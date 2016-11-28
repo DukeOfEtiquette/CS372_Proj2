@@ -233,6 +233,8 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
   while( (msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg))) > 0)
   {
 
+    std::cout << "rcvMsg: " << rcvMsg << std::endl;
+
   }
 
 }
