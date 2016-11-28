@@ -51,10 +51,7 @@ try:
 
         # Receive the message and split on % to create a list
         msg = conn.recv(512)
-        print msg
         msg = msg.split("%")
-
-        print msg
 
         # If this is a listing request...
         if msg[0] == '-l':
@@ -85,6 +82,7 @@ try:
                 dataSock.send("File exists!")
                 f = open(msg[1], 'r')
                 content = f.read()
+                print "Sending -> ", content
                 dataSock.send(content)
             else:
                 dataSock.send("{0} does not exist on server".format(msg[1]))
