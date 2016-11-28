@@ -81,6 +81,8 @@ try:
             print "Data socket connected"
 
             print "Gonna send file in a jiffy"
+
+            dataSock.close()
         else:
 
             # Connect to data socket on client
