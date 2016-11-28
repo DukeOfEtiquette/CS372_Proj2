@@ -50,6 +50,7 @@ try:
 
         # Receive the message and split on % to create a list
         msg = conn.recv(512)
+        print msg
         msg = msg.split("%")
 
         print msg
