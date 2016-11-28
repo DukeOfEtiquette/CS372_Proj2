@@ -50,9 +50,13 @@ try:
         print 'Connection made with client, waiting for message...'
 
         # Receive the message and split on spaces to create a list
-        msg = conn.recv(512).split("^")
+        msg = conn.recv(512)
 
         # REMOVE THIS BEFORE SUBMITTING
+        print msg
+
+        msg = msg.split(" ")
+
         print msg
 
         # If this is a listing request...
@@ -61,7 +65,7 @@ try:
             # Connect to data socket on client
             dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             print sock.getpeername()
-            dataSock.connect((sock.getpeername(), msg[1]))
+            dataSock.connect((addr, msg[1]))
 
             # Search directly for all txt files
             files = glob.glob("*.txt")
