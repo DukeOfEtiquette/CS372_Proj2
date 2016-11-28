@@ -46,26 +46,19 @@ try:
 
         # Accept a connect and store sock and addr
         (conn, addr) = sock.accept()
-
         print 'Connection made with client, waiting for message...'
 
-        # Receive the message and split on spaces to create a list
+        # Receive the message and split on % to create a list
         msg = conn.recv(512)
-
-        # REMOVE THIS BEFORE SUBMITTING
-        print msg
-
         msg = msg.split("%")
 
-        print msg
+        # Connect to data socket on client
+        dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        dataSock.connect((addr[0], int(float(msg[1]))))
+        print "Data socket connected"
 
         # If this is a listing request...
         if msg[0] == '-l':
-
-            # Connect to data socket on client
-            dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            dataSock.connect((addr[0], int(float(msg[1]))))
-            print "Data socket connected"
 
             # Search directly for all txt files and space separate them
             files = glob.glob("*.txt")
@@ -79,10 +72,12 @@ try:
             dataSock.close()
         elif msg[0] == '-g':
 
-            # Connect to data socket on client
-            dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            dataSock.connect((addr[0], int(float(msg[1]))))
-            print "Data socket connected"
+            print "Gonna send file in a jiffy"
+        else:
+
+            # Send message across data socket that an unknown arg was sent
+            dataSock.send("Bad arguement sent, unable to complete request.")
+
 
         # Close the connection
         conn.close()
