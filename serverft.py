@@ -55,7 +55,7 @@ try:
         # REMOVE THIS BEFORE SUBMITTING
         print msg
 
-        msg = msg.split("^")
+        msg = msg.split("%")
 
         print msg
 

@@ -137,6 +137,8 @@ int main(int argc, char **argv)
 
   sndMsg += dataPort;
 
+  std::cout << "Sending: " << sndMsg << std::endl;
+
   //Send message
   write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
 
