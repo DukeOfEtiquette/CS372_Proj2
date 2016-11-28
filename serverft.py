@@ -53,7 +53,7 @@ try:
         msg = conn.recv(512)
 
         # REMOVE THIS BEFORE SUBMITTING
-        print msg
+        print msg[0], " ", msg[1]
 
         msg = msg.split(" ")
 
@@ -64,8 +64,7 @@ try:
 
             # Connect to data socket on client
             dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            print sock.getpeername()
-            dataSock.connect((addr, msg[1]))
+            dataSock.connect((addr[0], int(float(msg[1]))))
 
             # Search directly for all txt files
             files = glob.glob("*.txt")
