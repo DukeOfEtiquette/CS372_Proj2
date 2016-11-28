@@ -5,16 +5,16 @@ import socket
 import signal
 import glob
 
-#make sure usage is correct
+# make sure usage is correct
 if len(sys.argv) != 2:
     print "usage: ./code.py port"
     sys.exit(1)
 
 
-#Register signal and define signal function
+# Register signal and define signal function
 def signal_handler(signal, frame):
 
-    #CLOSE IT
+    # CLOSE IT
     sock.close()
 
     print "Exiting with the highest amount of grace."
@@ -23,7 +23,7 @@ def signal_handler(signal, frame):
 
 signal.signal(signal.SIGINT, signal_handler)
 
-#User localhost and port# passed at cmd line
+# User localhost and port# passed at cmd line
 host = 'flip2'
 port = sys.argv[1]
 
@@ -31,7 +31,7 @@ print host
 print port
 
 try:
-    #Open socket and bind to desired host and port
+    # Open socket and bind to desired host and port
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((socket.gethostbyname(host), int(port)))
 
