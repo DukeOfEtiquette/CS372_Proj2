@@ -53,9 +53,9 @@ try:
         msg = conn.recv(512)
 
         # REMOVE THIS BEFORE SUBMITTING
-        print msg[0], " ", msg[1]
+        print msg
 
-        msg = msg.split(" ")
+        msg = msg.split("^")
 
         print msg
 

@@ -127,7 +127,7 @@ int main(int argc, char **argv)
   std::string sndMsg = "";
 
   //Format message with space at the end so server can split msg easily
-  sndMsg = arg + " ";
+  sndMsg = arg + "%";
 
   //Send argument
   write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
