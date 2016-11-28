@@ -1,5 +1,6 @@
 #/user/bin/python
 
+import os.path
 import sys
 import socket
 import signal
@@ -80,7 +81,10 @@ try:
             dataSock.connect((addr[0], int(float(msg[2]))))
             print "Data socket connected"
 
-            print "Gonna send file in a jiffy"
+            if os.path.isfile(msg[1]):
+                print "Yeah, I can get file: ", msg[1]
+            else:
+                print "That file doesn't exist: ", msg[1]
 
             dataSock.close()
         else:
