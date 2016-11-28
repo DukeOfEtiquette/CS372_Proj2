@@ -3,7 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="768f65e1-77da-428a-b591-5acbc4de291e" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/ftclient.cpp" afterPath="$PROJECT_DIR$/ftclient.cpp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serverft.py" afterPath="$PROJECT_DIR$/serverft.py" />
     </list>
     <ignored path="CS372_Proj2.iws" />
     <ignored path=".idea/workspace.xml" />

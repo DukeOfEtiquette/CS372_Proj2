@@ -19,6 +19,7 @@
 void printFileList(std::string);
 void ReceiveListRequest(int);
 void ReceiveFileRequest(int);
+bool fileExist(const char *)
 
 int main(int argc, char **argv)
 {
@@ -165,11 +166,9 @@ int main(int argc, char **argv)
 
   if(bIsGet)
   {
-    ReceiveFileRequest(newDataSock);
-
+    ReceiveFileRequest(newDataSock, fileName);
   }else if(!bIsGet){
     ReceiveListRequest(newDataSock);
-
   }
 
   //Close all sockets
@@ -216,16 +215,24 @@ void ReceiveListRequest(int dataSock)
 
 }
 
-void ReceiveFileRequest(int dataSock)
+void ReceiveFileRequest(int dataSock, std::string fileName)
 {
   int msgLen = 0;
   char rcvMsg[MSG_LEN];
 
   bzero(rcvMsg, MSG_LEN);
 
+  std::cout << "ABOUT TO RECV " << fileName << std::endl;
+
   while( (msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg))) > 0)
   {
 
   }
 
+}
+
+bool is_file_exist(const char *fileName)
+{
+    std::ifstream infile(fileName);
+    return infile.good();
 }
