@@ -18,7 +18,6 @@
 
 void printFileList(std::string);
 void ReceiveListRequest(int);
-void ReceiveFileRequest(int);
 
 int main(int argc, char **argv)
 {
@@ -167,7 +166,7 @@ int main(int argc, char **argv)
   {
 
   }else if(!bIsGet){
-    ReceiveListRequest(newDataSock);
+    ReceiveListRequest(dataSock);
 
   }
 
@@ -183,16 +182,12 @@ void printFileList(std::string files)
 {
   std::istringstream iss(files);
 
-  std::cout << "Directory List: \n";
+  std::cout << "2: " << files << std::endl;
 
-  //Stream one item at a time, packet elements delim on space
   do{
     std::string file;
     iss >> file;
-    std::cout << file;
-
-	//New line for new file
-	std::cout << std::endl;
+    std::cout << file << std::endl;
   }while(iss);
 }
 
@@ -204,13 +199,24 @@ void ReceiveListRequest(int dataSock)
 
   bzero(rcvMsg, MSG_LEN);
 
-  //Keep reading all data
-  while( (msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg))) > 0)
+  do
   {
-	  files += rcvMsg;
-  }
+	std::cout << "About to recv msg\n";
 
-  //Print the directory list
+	msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg));
+
+	printf("ERROR: %s\n", strerror(errno));
+
+	std::cout << "msgLen: " << msgLen << std::endl;
+
+	printf("0: %s", rcvMsg);
+	std::cout << "0: " << rcvMsg << std::endl;
+
+    files += rcvMsg;
+  } while(msgLen > 0);
+
+	std::cout << "1: " << files << std::endl;
+
   printFileList(files);
 
 }

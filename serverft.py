@@ -73,9 +73,9 @@ try:
             files = " ".join(files)
             print files
             # Send all messages as a single string with space delim
-            dataSock.send(" ".join(files))
+            dataSock.send(files)
             # Send a random, (likely) unique string to signal end of packet
-            dataSock.send(" #$%")
+            # dataSock.send(" #$%")
             print "Finished sending message"
             dataSock.close()
 
