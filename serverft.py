@@ -67,25 +67,28 @@ try:
             dataSock.connect((addr[0], int(float(msg[1]))))
             print "Data socket connected"
 
-            # Search directly for all txt files
+            # Search directly for all txt files and space separate them
             files = glob.glob("*.txt")
-            print files
             files = " ".join(files)
-            print files
+
             # Send all messages as a single string with space delim
             dataSock.send(files)
-            # Send a random, (likely) unique string to signal end of packet
-            # dataSock.send(" #$%")
+
+            # Close socket now that we are done sending
             print "Finished sending message"
             dataSock.close()
+        elif msg[0] == '-g':
+
+            # Connect to data socket on client
+            dataSock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            dataSock.connect((addr[0], int(float(msg[1]))))
+            print "Data socket connected"
 
         # Close the connection
         conn.close()
 
 except Exception as err:
     print err
-
-
 
 
 

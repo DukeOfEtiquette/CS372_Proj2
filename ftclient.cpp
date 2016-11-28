@@ -139,8 +139,6 @@ int main(int argc, char **argv)
 
   sndMsg += dataPort;
 
-  std::cout << "Sending: " << sndMsg << std::endl;
-
   //Send message
   write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
 
@@ -184,7 +182,7 @@ void printFileList(std::string files)
 {
   std::istringstream iss(files);
 
-  std::cout << "Directory List: \n";
+  std::cout << "\nDirectory List: \n";
 
   //Stream one item at a time, packet elements delim on space
   do{
