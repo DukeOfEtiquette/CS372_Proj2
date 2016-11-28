@@ -82,9 +82,9 @@ try:
             print "Data socket connected"
 
             if os.path.isfile(msg[1]):
-                print "Yeah, I can get file: ", msg[1]
+                dataSock.send("File exists!")
             else:
-                print "That file doesn't exist: ", msg[1]
+                dataSock.send("{0} does not exist on server".format(msg[1]))
 
             dataSock.close()
         else:
