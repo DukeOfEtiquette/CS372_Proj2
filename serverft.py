@@ -79,7 +79,6 @@ try:
             print "Data socket connected"
 
             if os.path.isfile(msg[1]):
-                dataSock.send("File exists!")
                 f = open(msg[1], 'r')
                 content = f.read()
                 print "Sending -> ", content

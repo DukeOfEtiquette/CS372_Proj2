@@ -221,12 +221,19 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
   int msgLen = 0;
   char rcvMsg[MSG_LEN];
 
-  std::cout << "ABOUT TO RECV " << fileName << std::endl;
+  std::cout << "ABOUT TO RECV " << fileName[fileName.length() - 5] << std::endl;
 
   if(fileExist(fileName.c_str()))
     std::cout << "I SEE IT\n";
   else
     std::cout << "WHAT FILE?!!!\n";
+
+  int nCopy = 1;
+
+//  while(fileExist(fileName.c_str()))
+//  {
+//    fileN
+//  }
 
   bzero(rcvMsg, MSG_LEN);
 
@@ -236,8 +243,6 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
     std::cout << "rcvMsg: " << rcvMsg << std::endl;
 
   }
-
-  std::cout << "msgLen: " << msgLen << std::endl;
 
 }
 
