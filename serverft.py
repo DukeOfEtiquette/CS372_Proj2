@@ -83,6 +83,9 @@ try:
 
             if os.path.isfile(msg[1]):
                 dataSock.send("File exists!")
+                f = open(msg[1], 'r')
+                content = f.read()
+                print content
             else:
                 dataSock.send("{0} does not exist on server".format(msg[1]))
 
