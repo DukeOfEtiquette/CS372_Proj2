@@ -50,7 +50,7 @@ try:
         print 'Connection made with client, waiting for message...'
 
         # Receive the message and split on spaces to create a list
-        msg = conn.recv(512).split(" ")
+        msg = conn.recv(512).split("^")
 
         # REMOVE THIS BEFORE SUBMITTING
         print msg
