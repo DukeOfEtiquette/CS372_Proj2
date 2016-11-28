@@ -127,27 +127,20 @@ int main(int argc, char **argv)
   std::string sndMsg = "";
 
   //Format message with space at the end so server can split msg easily
-  sndMsg = arg + "^";
+  sndMsg = arg + " ";
 
   //Send argument
   write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
 
-  std::cout << "ARG SENT\n";
-
   //If this is a get request, send file name
   if(bIsGet)
   {
-	std::cout << "THIS IS GET\n";
-	sndMsg = fileName + "^";
+	sndMsg = fileName + " ";
     write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
   }
 
-  std::cout << "BOUT TO SEND DATA PORT\n";
-
   //Don't need to format last part of message, which is the data port number
   write(client, dataPort.c_str(), strlen(dataPort.c_str()));
-
-  std::cout << "SENT DATA PORT\n";
 
   //Wait for a connection onto the data socket now that message has been sent
   listen(dataSock, 1);
