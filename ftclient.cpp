@@ -41,7 +41,7 @@ int main(int argc, char **argv)
   //to indicate it is a get request
   if(arg == "-l")
   {
-    dataPort =argv[4];
+    dataPort = argv[4];
   }else if(arg == "-g"){
     fileName = argv[4];
     dataPort = argv[5];
@@ -126,21 +126,19 @@ int main(int argc, char **argv)
   //Begin process of sending request message to server
   std::string sndMsg = "";
 
-  //Format message with space at the end so server can split msg easily
+  //Format message with '%' at the end of each element so server can split msg easily
   sndMsg = arg + "%";
-
-  //Send argument
-  write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
 
   //If this is a get request, send file name
   if(bIsGet)
   {
-	sndMsg = fileName + " ";
-    write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
+	  sndMsg += fileName + "%";
   }
 
-  //Don't need to format last part of message, which is the data port number
-  write(client, dataPort.c_str(), strlen(dataPort.c_str()));
+  sndMsg += dataPort;
+
+  //Send message
+  write(client, sndMsg.c_str(), strlen(sndMsg.c_str()));
 
   //Wait for a connection onto the data socket now that message has been sent
   listen(dataSock, 1);
