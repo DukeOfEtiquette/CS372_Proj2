@@ -245,12 +245,15 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
 
   std::cout << "Writing to file: " << fileName << std::endl;
 
+  std::ofstream newFile(fileName);
+
   bzero(rcvMsg, MSG_LEN);
 
   while( (msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg))) > 0)
   {
 
     std::cout << "rcvMsg: " << rcvMsg << std::endl;
+    newFile << rcvMsg;
 
   }
 
