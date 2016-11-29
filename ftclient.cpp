@@ -232,10 +232,13 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
 
   while(fileExist(fileName.c_str()))
   {
+    std::ostringstream st;
+    st << nCopy;
+
     if(nCopy == 1)
-      fileName.insert(fileName.length() - 4, std::to_string(nCopy));
+      fileName.insert(fileName.length() - 4, st.str());
     else
-      fileName[fileName.length() - 5] = std::to_string(nCopy);
+      fileName.replace(fileName.length() - 5, 1, st.str());
   }
 
   std::cout << "Writing to file: " << fileName << std::endl;
