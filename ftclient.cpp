@@ -1,3 +1,17 @@
+/* Author: Adam DuQuette
+ * 
+ * Beej's guide was used a lot as reference for this project.
+ * I also used the following guide for the C++ bits:
+ * http://www.bogotobogo.com/cplusplus/sockets_server_client.php
+ *
+ * I also used Python and C++ standard documention
+ *
+ * In places I found code ideas from StackOverflow or other places
+ * I have made a note of it.
+ *
+ * */
+
+
 #include <iostream>
 #include <fstream>
 #include <errno.h>
@@ -165,6 +179,7 @@ int main(int argc, char **argv)
     std::cout << "Data connection established with server.\n";
   }
 
+  //Make appropriate function call based on user arg input
   if(bIsGet)
   {
     ReceiveFileRequest(newDataSock, fileName);
@@ -180,6 +195,7 @@ int main(int argc, char **argv)
 	return 0;
 }
 
+//Simple helper function to print the list of files to stdout
 void printFileList(std::string files)
 {
   std::istringstream iss(files);
@@ -216,50 +232,49 @@ void ReceiveListRequest(int dataSock)
 
 }
 
+//Function to handle all file listing requests
 void ReceiveFileRequest(int dataSock, std::string fileName)
 {
   int msgLen = 0;
   char rcvMsg[MSG_LEN];
 
-  std::cout << "ABOUT TO RECV " << fileName << std::endl;
-
-  if(fileExist(fileName.c_str()))
-    std::cout << "I SEE IT\n";
-  else
-    std::cout << "WHAT FILE?!!!\n";
-
   int nCopy = 1;
 
+  //Check if the file already exists locally
+  //If it does then add a unique number to the end of the file
+  //to show it is a copy
   while(fileExist(fileName.c_str()))
   {
     std::ostringstream st;
     st << nCopy;
 
+    //If this is the first iteration then insert a 1 at the end of the file
+    //name but before the file extension
+    //Else replae whatever number is there with whatever iteration it is on
     if(nCopy == 1)
       fileName.insert(fileName.length() - 4, st.str());
     else
       fileName.replace(fileName.length() - 5, 1, st.str());
 
+    //Inc counter
     nCopy++;
   }
 
-  std::cout << "Writing to file: " << fileName << std::endl;
-
+  //Open file we are going to write to
   std::ofstream newFile;
   newFile.open(fileName.c_str());
 
   bzero(rcvMsg, MSG_LEN);
 
+  //Receive messages and write them to the file
   while( (msgLen = read(dataSock, rcvMsg, sizeof(rcvMsg))) > 0)
-  {
-
-    std::cout << "rcvMsg: " << rcvMsg << std::endl;
     newFile << rcvMsg;
-
-  }
 
 }
 
+//Simple helper function to determine if a file exists at the given path
+//Found solution from here:
+//http://stackoverflow.com/questions/12774207/fastest-way-to-check-if-a-file-exist-using-standard-c-c11-c
 bool fileExist(const char *fileName)
 {
     std::ifstream infile(fileName);

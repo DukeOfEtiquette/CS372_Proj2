@@ -78,6 +78,10 @@ try:
             dataSock.connect((addr[0], int(float(msg[2]))))
             print "Data socket connected"
 
+            '''
+            Found this solution to reading/sending the file from:
+            http://stackoverflow.com/questions/8009882/how-to-read-large-file-line-by-line-in-python
+            '''
             if os.path.isfile(msg[1]):
                 with open(msg[1], 'r') as f:
                     for line in f:
@@ -95,6 +99,7 @@ try:
 
             # Send message across data socket that an unknown arg was sent
             dataSock.send("Bad arguement sent, unable to complete request.")
+            dataSock.close()
 
         # Close the connection
         conn.close()
