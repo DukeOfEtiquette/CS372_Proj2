@@ -1,1 +1,3 @@
 This is a small file to test the se
+with two lines
+and even a third one

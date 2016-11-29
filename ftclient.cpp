@@ -245,7 +245,8 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
 
   std::cout << "Writing to file: " << fileName << std::endl;
 
-  std::ofstream newFile(fileName);
+  std::ofstream newFile;
+  newFile.open(fileName.c_str());
 
   bzero(rcvMsg, MSG_LEN);
 
