@@ -25,7 +25,7 @@ def signal_handler(signal, frame):
 signal.signal(signal.SIGINT, signal_handler)
 
 # User localhost and port# passed at cmd line
-host = 'localhost'
+host = 'flip1'
 port = sys.argv[1]
 
 print host
