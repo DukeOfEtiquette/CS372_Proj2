@@ -235,12 +235,12 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
     std::ostringstream st;
     st << nCopy;
 
-    nCopy++;
-
     if(nCopy == 1)
       fileName.insert(fileName.length() - 4, st.str());
     else
       fileName.replace(fileName.length() - 5, 1, st.str());
+
+    nCopy++;
   }
 
   std::cout << "Writing to file: " << fileName << std::endl;
