@@ -235,6 +235,8 @@ void ReceiveFileRequest(int dataSock, std::string fileName)
     std::ostringstream st;
     st << nCopy;
 
+    nCopy++;
+
     if(nCopy == 1)
       fileName.insert(fileName.length() - 4, st.str());
     else
