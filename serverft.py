@@ -80,8 +80,8 @@ try:
 
             if os.path.isfile(msg[1]):
                 with open(msg[1], 'r') as f:
-                    while 1:
-                        dataSock.send(f.read(512))
+                    for line in f:
+                        dataSock.send(line)
             else:
                 dataSock.send("{0} does not exist on server".format(msg[1]))
 
