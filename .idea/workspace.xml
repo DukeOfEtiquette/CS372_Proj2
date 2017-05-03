@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="768f65e1-77da-428a-b591-5acbc4de291e" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/serverft.py" afterPath="$PROJECT_DIR$/serverft.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
     </list>
     <ignored path="CS372_Proj2.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -108,7 +108,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../CapstoneProj/Vala" />
     <property name="WebServerToolWindowFactoryState" value="false" />
   </component>
   <component name="ShelveChangesManager" show_recycled="false">
